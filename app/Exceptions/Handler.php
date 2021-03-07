@@ -64,10 +64,10 @@ class Handler extends ExceptionHandler
 
         switch($guard) {
             case 'student':
-                $route = '/login';
+                $route = 'login.student';
                 break;
             default:
-                $route = 'admin/login';
+                $route = 'login';
         }
 
         return redirect()->guest(route($route));

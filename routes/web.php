@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::get('login', 'Auth\StudentLoginController@showLoginForm')->name('login.student');
@@ -26,8 +26,9 @@ Route::group(['prefix' => 'admin'], function() {
     });
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
-    Route::get('users', 'Admin\UsersController@index')->name('admin.users');
-    Route::post('users', 'Admin\UsersController@store')->name('admin.store');
+    Route::get('users', 'Admin\UsersController@index')->name('users.index');
+    Route::post('users', 'Admin\UsersController@store')->name('users.store');
+    Route::get('delete_user/{id}', 'Admin\UsersController@delete_user')->name('users.delete');
 
 });
 

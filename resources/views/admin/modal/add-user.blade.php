@@ -6,8 +6,6 @@
                 <button type="button" class="close text-white" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
 
-            
-
             <form method="post" id="form-add-user">
                 <div class="modal-body p-4">
                     <div id="errors"></div>
@@ -31,7 +29,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="password" class="control-label">Password</label>
-                                <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                             </div>
                         </div>
                     </div>

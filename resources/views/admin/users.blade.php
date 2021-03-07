@@ -10,6 +10,12 @@
                     @include('admin.modal.add-user')
                 </div>
 
+                @if (session('msg'))
+                    <div class="alert alert-success">
+                        {{ session('msg') }}
+                    </div>
+                @endif
+
                 <table id="basic-datatable" class="table dt-responsive table-striped nowrap">
                     <thead>
                         <tr>
@@ -30,7 +36,7 @@
                                 <td>{{ ucfirst($user->role) }}</td>
                                 <td>
                                     <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    <a href="{{ route('users.delete', ['id' => $user->id]) }}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -47,7 +53,7 @@
             e.preventDefault();
             
             $.ajax({
-                url: "{{ route('admin.store') }}",
+                url: "{{ route('users.store') }}",
                 type: "post",
                 data: {
                     _token: "{{ csrf_token() }}",
@@ -57,9 +63,35 @@
                     role: $('select[name="role"]').val(),
                 },
                 success: function(res) {
-                    
-                }
+                    if(!res.success) {
+
+                        $('#errors').html(`
+                            <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <ul id="errorBag" class="mb-0"></ul>
+                            </div>
+                        `)
+
+                        for(let error in res.errors) {
+                            $(`<li>${res.errors[error][0]}</li>`).appendTo($('#errorBag'))
+                        }
+
+                        removeErrors()
+                    } else {
+                        $('#add_user').modal('hide')
+                        $('#form-add-user')[0].reset()
+                        location.reload()
+                    }
+                },  
             })
         })
+
+        function removeErrors() {
+            setTimeout(() => {
+                $('#errors .alert').remove()
+            }, 5000)
+        }
     </script>
 @endsection

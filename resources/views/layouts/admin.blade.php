@@ -121,7 +121,7 @@
 
                             @if (auth()->user()->role === 'admin')
                             <li class="has-submenu">
-                                <a href="{{ route('admin.users') }}">
+                                <a href="{{ route('users.index') }}">
                                     <i class="fas fa-users"></i>Users
                                 </a>
                             </li>
