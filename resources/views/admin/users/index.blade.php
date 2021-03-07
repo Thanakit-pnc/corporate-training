@@ -11,7 +11,10 @@
                 </div>
 
                 @if (session('msg'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                         {{ session('msg') }}
                     </div>
                 @endif
@@ -35,8 +38,10 @@
                                 <td>{{ $user->username }}</td>
                                 <td>{{ ucfirst($user->role) }}</td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></button>
-                                    <a href="{{ route('users.delete', ['id' => $user->id]) }}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm waves-effect waves-light"><i class="fas fa-edit"></i></a>
+                                    @if(auth()->user()->id !== $user->id) 
+                                        <button class="btn btn-danger btn-sm sa-delete" data-info="{{ $user }}"><i class="fas fa-trash-alt"></i></button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -85,6 +90,30 @@
                         location.reload()
                     }
                 },  
+            })
+        })
+
+        $(document).on('click', '.sa-delete', function() {
+            let data = $(this).data('info')
+
+            Swal.fire({title:"Are you sure?",
+                text:`You want to delete ${data.name}`,
+                type:"warning",
+                showCancelButton:!0,
+                confirmButtonColor:"#3085d6",
+                cancelButtonColor:"#d33",
+                confirmButtonText:"Yes, delete it!"
+            }).then(function(t){
+                if(t.value) {
+                    $.ajax({
+                        url: 'delete_user/' + data.id,
+                        success: function(res) {
+                            if(res.msg) {
+                                Swal.fire("Deleted!",`${data.name} has been deleted.`,"success").then(function(t) { t.value && location.reload()})
+                            }
+                        }
+                    })
+                }
             })
         })
 

@@ -14,6 +14,9 @@
         <link href="{{ asset('public/assets/libs/datatables/buttons.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/libs/datatables/select.bootstrap4.css') }}" rel="stylesheet" type="text/css" />
 
+        <!-- Sweet Alert-->
+        <link href="{{ asset('public/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
+
         <!-- App css -->
         <link href="{{ asset('public/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -177,6 +180,12 @@
 
         <!-- Datatables init -->
         <script src="{{ asset('public/assets/js/pages/datatables.init.js') }}"></script>
+
+        <!-- Sweet Alerts js -->
+        <script src="{{ asset('public/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+        <!-- Sweet alert init js-->
+        <script src="{{ asset('public/assets/js/pages/sweet-alerts.init.js') }}"></script>
 
         @yield('js')
 

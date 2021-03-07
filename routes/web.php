@@ -28,6 +28,9 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('users', 'Admin\UsersController@index')->name('users.index');
     Route::post('users', 'Admin\UsersController@store')->name('users.store');
+    Route::get('users/{id}/edit', 'Admin\UsersController@edit')->name('users.edit');
+    Route::post('users/{id}/update', 'Admin\UsersController@update')->name('users.update');
+    Route::post('users/{id}/update_password', 'Admin\UsersController@update_password')->name('users.update_password');
     Route::get('delete_user/{id}', 'Admin\UsersController@delete_user')->name('users.delete');
 
 });

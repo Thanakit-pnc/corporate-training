@@ -36,11 +36,24 @@
                             </div>
                             <div class="card-body">
 
+                                @if($errors->any())
+                                    <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                        <ul class="mb-0">
+                                            @foreach($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <form action="{{ route('login') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group mb-3">
                                         <label for="username">Username</label>
-                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
+                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username" value="{{ old('username') }}">
                                     </div>
 
                                     <div class="form-group mb-3">
