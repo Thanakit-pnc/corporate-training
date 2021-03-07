@@ -38,16 +38,16 @@
                                     <p class="text-muted mb-3">Enter your username and password to access.</p>
                                 </div>
 
-                                <form action="{{ route('login') }}" method="post">
+                                <form action="{{ route('login.student') }}" method="post">
                                     {{ csrf_field() }}
                                     <div class="form-group mb-3">
                                         <label for="username">Username</label>
-                                        <input class="form-control" type="text" id="username" placeholder="Username">
+                                        <input class="form-control" type="text" id="username" name="username" placeholder="Username">
                                     </div>
 
                                     <div class="form-group mb-3">
                                         <label for="password">Password</label>
-                                        <input class="form-control" type="password" id="password" placeholder="Password">
+                                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
                                     </div>
 
                                     <div class="form-group mb-0 text-center">

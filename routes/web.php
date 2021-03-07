@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('login', 'Auth\StudentLoginController@showLoginForm')->name('login.student');
+Route::post('login', 'Auth\StudentLoginController@login');
 
 
 Route::group(['prefix' => 'admin'], function() {
@@ -33,6 +34,10 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('users/{id}/update_password', 'Admin\UsersController@update_password')->name('users.update_password');
     Route::get('delete_user/{id}', 'Admin\UsersController@delete_user')->name('users.delete');
 
+    Route::post('create-group', 'Admin\DashboardController@create_group')->name('create-group');
+
+    Route::get('group/{id}', 'Admin\GroupController@index')->name('group.index');
+    Route::post('group/{id}', 'Admin\GroupController@store')->name('group.store');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
