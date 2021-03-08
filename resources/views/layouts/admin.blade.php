@@ -59,35 +59,37 @@
                             <!-- End mobile menu toggle-->
                         </li>
 
-                        <li class="dropdown notification-list">
-                            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <i class="fas fa-user font-20 align-middle"></i>
-                                <span class="pro-user-name ml-1 text-capitalize">
-                                    {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i> 
-                                </span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                <!-- item-->
-                                <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                        @if (Auth::check())
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="fas fa-user font-20 align-middle"></i>
+                                    <span class="pro-user-name ml-1 text-capitalize">
+                                        {{ auth()->user()->name }} <i class="mdi mdi-chevron-down"></i> 
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                    <!-- item-->
+                                    <div class="dropdown-header noti-title">
+                                        <h6 class="text-overflow m-0">Welcome !</h6>
+                                    </div>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-account-circle"></i>
+                                        <span>My Account</span>
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <!-- item-->
+                                    <a href="{{ route('admin.logout') }}" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-logout"></i>
+                                        <span>Logout</span>
+                                    </a>
+
                                 </div>
-
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-account-circle"></i>
-                                    <span>My Account</span>
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <!-- item-->
-                                <a href="{{ route('admin.logout') }}" class="dropdown-item notify-item">
-                                    <i class="mdi mdi-logout"></i>
-                                    <span>Logout</span>
-                                </a>
-
-                            </div>
-                        </li>            
+                            </li> 
+                        @endif           
 
                     </ul>
 
@@ -114,23 +116,25 @@
                 <div class="container-fluid">
                     <div id="navigation">
                         <!-- Navigation Menu-->
-                        <ul class="navigation-menu">
+                        @if (Auth::check())
+                            <ul class="navigation-menu">
 
-                            <li class="has-submenu">
-                                <a href="{{ route('admin.dashboard') }}">
-                                    <i class="mdi mdi-view-dashboard"></i>Dashboards
-                                </a>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="{{ route('admin.dashboard') }}">
+                                        <i class="mdi mdi-view-dashboard"></i>Dashboards
+                                    </a>
+                                </li>
 
-                            @if (auth()->user()->role === 'admin')
-                            <li class="has-submenu">
-                                <a href="{{ route('users.index') }}">
-                                    <i class="fas fa-users"></i>Users
-                                </a>
-                            </li>
-                            @endif
+                                @if (auth()->user()->role === 'admin')
+                                <li class="has-submenu">
+                                    <a href="{{ route('users.index') }}">
+                                        <i class="fas fa-users"></i>Users
+                                    </a>
+                                </li>
+                                @endif
 
-                        </ul>
+                            </ul>
+                        @endif
                         <!-- End navigation menu -->
 
                         <div class="clearfix"></div>

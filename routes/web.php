@@ -17,7 +17,16 @@ Route::get('/', function () {
 
 Route::get('login', 'Auth\StudentLoginController@showLoginForm')->name('login.student');
 Route::post('login', 'Auth\StudentLoginController@login');
+Route::get('student-logout', 'Auth\StudentLoginController@studentLogout')->name('logout.student');
 
+Route::group(['middleware' => 'auth:student'], function() {
+
+    Route::get('exam/{number}', 'ExamController@index')->name('exam.test');
+
+    Route::get('success', function() {
+        return view('success');
+    });
+});
 
 Route::group(['prefix' => 'admin'], function() {
     Auth::routes();
@@ -38,6 +47,11 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('group/{id}', 'Admin\GroupController@index')->name('group.index');
     Route::post('group/{id}', 'Admin\GroupController@store')->name('group.store');
+
+    Route::get('students/{group_id}', 'Admin\GroupController@students')->name('students.all');    
+    Route::post('check-to-add/{id}', 'Admin\GroupController@checkToAdd')->name('check-to-add');
+
+    Route::post('update-student', 'Admin\StudentController@update')->name('student.update');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -10,6 +10,7 @@ class Student extends Authenticatable
     use Notifiable;
     
     public $timestamps = true;
+    public $rememberTokenName = false;
 
     protected $fillable = [
         'name', 'username', 'mobile', 'password'
@@ -18,4 +19,8 @@ class Student extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function student_result() {
+        return $this->hasOne('App\StudentResult');
+    }
 }

@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $fillable = ['company_name', 'amount'];
+    protected $fillable = ['company_id', 'amount'];
 
-    public function group_student() {
-        return $this->hasMany('App\GroupStudent', 'company_id', 'id');
+    public function dataset_company() {
+        return $this->hasOne('App\Dataset_company', 'id', 'company_id');
+    }
+
+    public function student_results() {
+        return $this->hasMany('App\StudentResult', 'group_id', 'id');
     }
 }

@@ -16,9 +16,9 @@
                         @foreach ($companies as $company)
                             <tr>
                                 <td>
-                                    <a href="{{ route('group.index', [$company->id]) }}">{{ $company->company_name }}</a>
+                                    <a href="{{ route('group.index', [$company->id]) }}">{{ $company->dataset_company->company_name }}</a>
                                 </td>
-                                <td>{{ $company->amount }} / {{ $company->group_student->count() }}</td>
+                                <td>{{ $company->student_results->count() }} / {{ $company->amount }}</td>
                                 <td>
                                     {{ $company->created_at->format('d/F/Y H:i:s') }}
                                 </td>
@@ -40,16 +40,33 @@
 
                 <form action="{{ route('create-group') }}" method="post">
                     {{ csrf_field() }}
-                    
+
                     <div class="form-group">
                         <label for="company">Company</label>
-                        <input type="text" class="form-control @if($errors->has('company')) is-invalid @endif" name="company" placeholder="Company" value="{{ old('company') }}">
+                        <select name="company" class="form-control @if($errors->has('company')) is-invalid @endif">
+                            <option selected disabled>-Select Company-</option>
+                            @foreach ($dataset_companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->company_name }}</option>
+                            @endforeach
+                            <option value="other"  @if(old('company') === 'other') selected @endif>Other</option>
+                        </select>
                         @if ($errors->has('company'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('company') }}
                             </div>
                         @endif
                     </div>
+
+                    @if($errors->has('company_other'))
+                    <div class="form-group">
+                        <input type="text" class="form-control @if($errors->has('company_other')) is-invalid @endif" name="company_other" placeholder="Other Company">
+                        @if ($errors->has('company_other'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('company_other') }}
+                        </div>
+                        @endif
+                    </div>
+                    @endif
 
                     <div class="form-group">
                         <label for="amount">Amount</label>
@@ -66,4 +83,25 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $('select[name="company"]').on('change', function() {
+            if($(this).val() === 'other') {
+                $(`
+                    <div class="form-group">
+                        <input type="text" class="form-control @if($errors->has('company_name')) is-invalid @endif" name="company_other" placeholder="Other Company">
+                        @if ($errors->has('company_name'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('company_name') }}
+                        </div>
+                        @endif
+                    </div>
+                `).insertAfter($(this).parent())
+            } else {
+                $('input[name="company_other"]').parent().remove()
+            }
+        })
+    </script>
 @endsection

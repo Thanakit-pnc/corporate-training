@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupStudentTable extends Migration
+class CreateStudentResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateGroupStudentTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_student', function (Blueprint $table) {
-            $table->integer('company_id');
+        Schema::create('student_results', function (Blueprint $table) {
+            $table->integer('group_id');
             $table->integer('student_id');
             $table->text('text_result')->nullable();
             $table->string('score')->nullable();
+            $table->enum('status', ['pending', 'success'])->default('pending');
             $table->datetime('sent_at')->nullable();
         });
     }
@@ -29,6 +30,6 @@ class CreateGroupStudentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_student');
+        Schema::dropIfExists('student_results');
     }
 }
