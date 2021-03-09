@@ -55,6 +55,7 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('update-student', 'Admin\StudentController@update')->name('student.update');
 
     Route::get('group/{group}/view/{student_id}', 'Admin\ViewStudentController@index')->name('view.index');
+    Route::post('view/update', 'Admin\ViewStudentController@update')->name('view.update');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

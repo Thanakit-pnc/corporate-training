@@ -43,7 +43,8 @@
                                         <td>{{ $group->student->name }}</td>
                                         <td>{{ $group->student->username }}</td>
                                         <td>{{ $group->student->mobile }}</td>
-                                        <td>{{ ucfirst($group->status) }}</span>
+                                        <td>
+                                            <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
                                         </td>
                                         <td>{{ $group->score }}</td>
                                         <td>

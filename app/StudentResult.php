@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class StudentResult extends Model
 {
+
     protected $fillable = [
-        'group_id', 'student_id', 'text_result', 'score', 'sent_at'
+        'group_id', 'student_id', 'text_result', 'score', 'sent_at', 'comment'
     ];
 
     public $timestamps = false;

@@ -28,7 +28,7 @@ class GroupController extends Controller
 
         $this->validate($request, [
             'username.*' => 'unique:students,username',
-            'mobile.*' => 'min:10|numeric'
+            'mobile.*' => 'min:10|numeric|nullable'
         ],[
             'unique' => 'username has already been taken.',
             'min' => 'mobile must be at least 10 characters.'
@@ -62,7 +62,7 @@ class GroupController extends Controller
     } 
 
     public function students($group_id) {
-
+     
         $students = Student::whereDoesntHave('student_result', function ($query) use ($group_id) {
             $query->where('group_id', '=', $group_id);
         })->get();
