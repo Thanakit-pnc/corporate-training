@@ -191,6 +191,8 @@
         <!-- Sweet alert init js-->
         <script src="{{ asset('public/assets/js/pages/sweet-alerts.init.js') }}"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.7.0/tinymce.min.js" integrity="sha512-XaygRY58e7fVVWydN6jQsLpLMyf7qb4cKZjIi93WbKjT6+kG/x4H5Q73Tff69trL9K0YDPIswzWe6hkcyuOHlw==" crossorigin="anonymous"></script>
+
         @yield('js')
 
         <!-- App js -->

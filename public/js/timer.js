@@ -17,12 +17,19 @@ function setTime() {
 
     timeEl.innerHTML = `${minutes < 10 ? '0'+minutes : minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
 
-    console.log(totalTime);
     if(totalTime < 0) {
         stopTime()
-        alert('Your time is up.')
+
+        Swal.fire({
+            title:"Your time is up!",
+            type:"warning",
+            confirmButtonClass:"btn btn-confirm mt-2",
+            allowOutsideClick: false
+        }).then(function(t) {
+            form.submit()
+        })
+
         timeEl.innerHTML = "00:00"
-        // form.submit()
     }
 }
 

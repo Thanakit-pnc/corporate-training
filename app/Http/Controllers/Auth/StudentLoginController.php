@@ -28,8 +28,8 @@ class StudentLoginController extends Controller
        $student = Student::where('username', $request->username)->first();
 
        if(!empty($student)) {
-            $do_exam = StudentResult::where('student_id', $student->id)->latest('group_id')->first();
-            if($do_exam->status === 'pending') {
+            $do_exam = StudentResult::where('student_id', $student->id)->latest('sent_at')->first();
+            if(empty($do_exam->sent_at)) {
                 if(Auth::guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
                     return redirect('home');
                 }

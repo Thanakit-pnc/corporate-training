@@ -9,9 +9,11 @@
                     <p class="text-primary mb-0 font-weight-bold">Created at : {{ $company->created_at->format('d/F/Y H:i') }}</p>
                 </div>
 
-                <div class="text-right mt-2">
-                    <a href="{{ route('students.all', [$company->id]) }}" class="btn btn-primary waves-effect waves-light">Add Student</a>
-                </div>
+                @if ($company->student_results->count() !== $company->amount)
+                    <div class="text-right mt-2">
+                        <a href="{{ route('students.all', [$company->id]) }}" class="btn btn-primary waves-effect waves-light">Add Student</a>
+                    </div>
+                @endif
   
                 <div class="mt-3">
 
@@ -41,13 +43,12 @@
                                         <td>{{ $group->student->name }}</td>
                                         <td>{{ $group->student->username }}</td>
                                         <td>{{ $group->student->mobile }}</td>
-                                        <td>
-                                            <span class="badge badge-{{ $group->status === 'pending' ? 'warning' : 'success' }}">{{ ucfirst($group->status) }}</span>
+                                        <td>{{ ucfirst($group->status) }}</span>
                                         </td>
                                         <td>{{ $group->score }}</td>
                                         <td>
                                             @if ($group->status === 'success')
-                                            <button class="btn btn-info btn-sm">View</button>
+                                                <a href="{{ route('view.index',[$company->id, $group->student_id]) }}" class="btn btn-info btn-sm">View</a>
                                             @endif
                                             <button class="btn btn-warning btn-sm waves-effect waves-light" data-toggle="modal" data-target="#edit{{ $group->student->id }}">Edit</button>
                                             @include('admin.modal.edit-student', [$group])

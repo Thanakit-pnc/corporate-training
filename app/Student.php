@@ -21,6 +21,6 @@ class Student extends Authenticatable
     ];
 
     public function student_result() {
-        return $this->hasOne('App\StudentResult');
+        return $this->hasOne(StudentResult::class);
     }
 }

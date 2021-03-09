@@ -22,6 +22,7 @@ Route::get('student-logout', 'Auth\StudentLoginController@studentLogout')->name(
 Route::group(['middleware' => 'auth:student'], function() {
 
     Route::get('exam/{number}', 'ExamController@index')->name('exam.test');
+    Route::post('exam/{number}', 'ExamController@store');
 
     Route::get('success', function() {
         return view('success');
@@ -52,6 +53,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::post('check-to-add/{id}', 'Admin\GroupController@checkToAdd')->name('check-to-add');
 
     Route::post('update-student', 'Admin\StudentController@update')->name('student.update');
+
+    Route::get('group/{group}/view/{student_id}', 'Admin\ViewStudentController@index')->name('view.index');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

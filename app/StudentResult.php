@@ -10,11 +10,15 @@ class StudentResult extends Model
         'group_id', 'student_id', 'text_result', 'score', 'sent_at'
     ];
 
+    public $timestamps = false;
+
+    protected $dates = ['sent_at'];
+
     public function company() {
-        return $this->belongsTo('App\Company', 'id');
+        return $this->belongsTo(Company::class, 'group_id');
     }
 
     public function student() {
-        return $this->belongsTo('App\Student');
+        return $this->belongsTo(Student::class);
     }
 }
