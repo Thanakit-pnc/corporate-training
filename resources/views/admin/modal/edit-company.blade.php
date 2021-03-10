@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="expire_date" class="control-label">Expire date</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" data-provide="datepicker" data-date-autoclose="true" name="expire_date" id="expire_date" placeholder="Expire date" autocomplete="off" required>
+                                    <input type="text" class="form-control" data-provide="datepicker" data-date-autoclose="true" name="expire_date" id="expire_date" placeholder="Expire date" autocomplete="off" required value="{{ !empty($company->expire_date) ? $company->expire_date->format('d/m/Y') : '' }}">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="ti-calendar"></i></span>
                                     </div>

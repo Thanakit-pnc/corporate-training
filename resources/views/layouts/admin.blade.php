@@ -100,7 +100,7 @@
 
                     <!-- LOGO -->
                     <div class="logo-box">
-                        <a href="index.html" class="logo text-center">
+                        <a href="{{ route('admin.dashboard') }}" class="logo text-center">
                             <span class="logo-lg">
                                 <img src="{{ asset('public/assets/images/logo-corporate.png') }}" alt="" height="60">
                                 <!-- <span class="logo-lg-text-light">Xeria</span> -->

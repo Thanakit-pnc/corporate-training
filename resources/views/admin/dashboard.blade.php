@@ -8,7 +8,7 @@
                     <thead>
                         <tr>
                             <th>Company</th>
-                            <th>Amount</th>
+                            <th>Trainee</th>
                             <th>Expire Date</th>
                             <th>Created at</th>
                             <th>Action</th>
@@ -24,7 +24,9 @@
                                     {{ $company->amount }}
                                 </td>
                                 <td>
-                                    {{ $company->expire_date }}
+                                    @if (!empty($company->expire_date))
+                                        {{ $company->expire_date->format('d/M/Y') }}
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $company->created_at->format('d/M/Y H:i') }}
@@ -56,7 +58,7 @@
 
                     <div class="form-group">
                         <label for="company">Company</label>
-                        <input type="text" class="form-control" name="company" value="{{ old('company') }}" placeholder="Company">
+                        <input type="text" class="form-control @if($errors->has('company')) is-invalid @endif" name="company" value="{{ old('company') }}" placeholder="Company">
                         @if ($errors->has('company'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('company') }}
@@ -65,11 +67,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="text" class="form-control @if($errors->has('amount')) is-invalid @endif" name="amount" placeholder="Amount" value="{{ old('amount') }}">
-                        @if ($errors->has('amount'))
+                        <label for="amount">Trainee</label>
+                        <input type="text" class="form-control @if($errors->has('trainee')) is-invalid @endif" name="trainee" placeholder="Trainee" value="{{ old('trainee') }}">
+                        @if ($errors->has('trainee'))
                             <div class="invalid-feedback">
-                                {{ $errors->first('amount') }}
+                                {{ $errors->first('trainee') }}
                             </div>
                         @endif
                     </div>

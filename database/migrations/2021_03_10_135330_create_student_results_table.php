@@ -19,7 +19,7 @@ class CreateStudentResultsTable extends Migration
             $table->foreign('comp_std_id')->references('id')->on('company_students')->nullable();
             $table->integer('task')->nullable();
             $table->text('body')->nullable();
-            $table->integer('score')->nullable();
+            $table->decimal('score', 2, 1)->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

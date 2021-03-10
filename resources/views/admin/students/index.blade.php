@@ -29,15 +29,12 @@
                                             <textarea class="mytextarea">{{ $result->body }}</textarea>
                                         </div>
                                     </div>
-
+                                    
                                     @include('admin.students.score-comment', [$result])
                                 </div>
                             @endforeach
-
+                            
                             <div class="text-right">
-                                @if(Auth::check())
-                                    <button class="btn btn-purple btn-sm" id="copy"><i class="fas fa-copy"></i></button>
-                                @endif
                                 <a href="{{ route('company.index', [$company_student->company_id]) }}" class="btn btn-info btn-sm">Back</a>
                             </div>
                         </div>
@@ -63,24 +60,5 @@
             readonly : +role
         });
 
-        $('#copy').click(copyUrl)
-
-        function copyUrl(e) {
-
-            e.preventDefault();
-
-            let el = document.createElement('textarea')
-            el.value = location.href
-
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-
-            $(this).tooltip('hide')
-                .attr('data-original-title', 'Copied!')
-                .tooltip('show');
-
-            document.body.removeChild(el);
-        }
     </script>
 @endsection

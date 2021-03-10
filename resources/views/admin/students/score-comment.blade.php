@@ -26,7 +26,7 @@
         </div>
         <div class="row mt-2">
             <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-success">Update</button>
+                <button type="submit" class="btn btn-success">Update Task {{ $result->task }}</button>
             </div>
         </div>
     </form>
@@ -39,6 +39,12 @@
             <p>
                 {{ $result->comment }}
             </p>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-12 text-center">
+            <button button class="btn btn-dark waves-effect waves-light" data-toggle="modal" data-target="#edit_score{{ $result->task }}">Edit</button>
+            @include('admin.modal.edit-score', [$result])
         </div>
     </div>
 @endif

@@ -25,12 +25,12 @@ class DashboardController extends Controller
 
         $this->validate($request, [
             'company' => 'required',
-            'amount' => 'required|numeric',
+            'trainee' => 'required|numeric',
         ]);
 
         Company::create([
             'company_name' => $request->company,
-            'amount' => $request->amount,
+            'amount' => $request->trainee,
         ]);
         
         return back();

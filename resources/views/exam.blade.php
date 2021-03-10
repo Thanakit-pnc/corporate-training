@@ -3,8 +3,8 @@
 @section('content')
     <div class="card-box">
         <div class="row">
-            <div class="col-md-12 text-right mb-3">
-                <h3 id="timer" class="my-0">70:00</h3>
+            <div class="col-md-12 text-center mb-3">
+                <h2 id="timer" class="my-0">70:00</h2>
             </div>
 
             <div class="col-md-12">

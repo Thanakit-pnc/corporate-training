@@ -5,7 +5,12 @@
         <div class="col-md-12">
             <div class="card-box">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="my-0">{{ $company->company_name }} ( {{ $company->amount }} {{ str_plural('Person', $company->amount) }} )</h3>
+                    <div class="d-flex">
+                        <h3 class="my-0 mr-3">{{ $company->company_name }} ( {{ $company->amount }} {{ str_plural('Person', $company->amount) }} )</h3>
+                        @if(Auth::check())
+                            <button class="btn btn-purple btn-sm" id="copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="CopyUrl"><i class="fas fa-copy"></i></button>
+                        @endif
+                    </div>
                     <p class="text-primary mb-0 font-weight-bold">Created at : {{ $company->created_at->format('d/F/Y H:i') }}</p>
                 </div>
 
@@ -48,16 +53,22 @@
                                         <td>
                                             <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
                                         </td>
-                                        <td>{{ !empty($group->sent_at) ? $group->sent_at->format('d/m/Y H:i') : '' }}</td>
                                         <td>
+                                            <span class="badge badge-dark">{{ !empty($group->sent_at) ? $group->sent_at->format('d/m/Y H:i') : '' }}</span>
+                                        </td>
+                                        <td>
+                                            @php
+                                                $score1 = $group->student_results()->oldest('id')->first();
+                                                $score2 = $group->student_results()->latest('id')->first();
+                                            @endphp
                                             @if ($group->student_results->count())
-                                                <span class="badge badge-pill badge-primary">{{ $group->student_results[0]->score }}</span>
-                                                <span class="badge badge-pill badge-purple">{{ $group->student_results[1]->score }}</span>
+                                                <span class="badge badge-pill badge-primary font-13">{{ $score1->score }}</span>
+                                                <span class="badge badge-pill badge-purple font-13">{{ $score2->score }}</span>
                                             @endif
                                         </td> 
                                         <td>
-                                            @if ($group->student_results->count() && $group->student_results[0]->score)
-                                                {{ ($group->student_results[0]->score + $group->student_results[1]->score) / 2 }}
+                                            @if(!empty($score1->score) && !empty($score2->score) && $group->student_results->sum('score') / 2 !== 0)
+                                                <span class="badge badge-success font-13">{{ $group->student_results->sum('score') / 2 }}</span>
                                             @endif
                                         </td>
                                         <td>
@@ -116,3 +127,27 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    <script>
+        $('#copy').click(copyUrl)
+
+        function copyUrl(e) {
+
+            e.preventDefault();
+
+            let el = document.createElement('textarea')
+            el.value = location.href
+
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+
+            $(this).tooltip('hide')
+                .attr('data-original-title', 'Copied!')
+                .tooltip('show');
+
+            document.body.removeChild(el);
+        }
+    </script>
+@stop

@@ -25,16 +25,21 @@ class ViewStudentController extends Controller
 
     public function update(StudentResult $student_result, Request $request) {
 
-        $this->validate($request, [
-            'score' => 'required|numeric',
-            'comment' => 'required',
-        ]);
-
-        $request->student_result->update([
-            'score' => $request->score,
-            'comment' => $request->comment
-        ]);
-
+        if(isset($request->comment)) {
+            $this->validate($request, [
+                'score' => 'required|numeric',
+                'comment' => 'required|present|nullable',
+            ]);
+            $request->student_result->update([
+                'score' => $request->score,
+                'comment' => $request->comment
+            ]);
+        } else {
+            $request->student_result->update([
+                'score' => $request->score,
+            ]);
+        }
+        
         return back();
     }
 }
