@@ -4,37 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use App\Company;
 use App\Student;
-use App\StudentResult;
+use App\CompanyStudent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class GroupController extends Controller
+class CompanyController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth:web');
+        $this->middleware('auth:web')->except(['index']);
     }
 
-    public function index($id) {
-
-        $company = Company::where('id', $id)->with(['student_results', 'dataset_company'])->first();
+    public function index(Company $company) {
 
         return view('admin.groups.index', [
             'company' => $company
         ]);
     }
 
-    public function store(Request $request, $group_id) {
+    public function store(Company $company, Request $request) {
 
         $this->validate($request, [
             'username.*' => 'unique:students,username',
-            'mobile.*' => 'min:10|numeric|nullable'
+            'mobile.*' => 'min:10|numeric'
         ],[
             'unique' => 'username has already been taken.',
             'min' => 'mobile must be at least 10 characters.'
         ]);
 
-        for($i = 0; $i < count($request->name); $i++) {
+        for($i = 0; $i < $company->amount; $i++) {
 
             if(!empty($request->name[$i])) {
                 $data = [
@@ -49,14 +47,14 @@ class GroupController extends Controller
 
                 $student = Student::create($data);
 
-                $companies[] = [
-                    'group_id' => $group_id,
+                $groups[] = [
+                    'company_id' => $company->id,
                     'student_id' => $student->id,
                 ];
             }
         }
 
-        StudentResult::insert($companies);
+        CompanyStudent::insert($groups);
 
         return back()->with(['msg' => 'Create student successfully.']);
     } 

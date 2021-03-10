@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $fillable = ['company_id', 'amount'];
+    protected $fillable = ['company_name', 'amount', 'expire_date'];
 
-    public function dataset_company() {
-        return $this->belongsTo(Dataset_Company::class, 'id');
+    protected $casts = [
+        'expire_date' => 'date',
+    ];
+
+    public function company_students() {
+        return $this->hasMany(CompanyStudent::class, 'company_id');
     }
 
-    public function student_results() {
-        return $this->hasMany(StudentResult::class, 'group_id', 'id');
-    }
+    
 }

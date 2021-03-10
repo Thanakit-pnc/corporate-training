@@ -20,7 +20,7 @@ class Student extends Authenticatable
         'password'
     ];
 
-    public function student_result() {
-        return $this->hasOne(StudentResult::class);
+    public function company_student() {
+        return $this->belongsTo(CompanyStudent::class, 'id', 'student_id');
     }
 }

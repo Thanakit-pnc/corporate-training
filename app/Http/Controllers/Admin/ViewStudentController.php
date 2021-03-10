@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Company;
 use App\StudentResult;
+use App\CompanyStudent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,31 +13,28 @@ class ViewStudentController extends Controller
         $this->middleware('auth:web')->except(['index', 'update']);
     }
 
-    public function index($company_id, $student_id) {
-        
-        $company = Company::find($company_id);
+    public function index(CompanyStudent $company_student) {
 
-        $result = $company->student_results()->where('student_id', $student_id)->first();
+        $results = StudentResult::where('comp_std_id', $company_student->id)->get();
 
         return view('admin.students.index', [
-            'result' => $result
+            'company_student' => $company_student,
+            'results' => $results
         ]);
     }
 
-    public function update(Request $request) {
+    public function update(StudentResult $student_result, Request $request) {
 
         $this->validate($request, [
             'score' => 'required|numeric',
             'comment' => 'required',
         ]);
 
-        $student_result = StudentResult::where('group_id', $request->group_id)
-                    ->where('student_id', $request->student_id)
-                    ->update([
-                        'score' => $request->score,
-                        'comment' => $request->comment
-                    ]);
+        $request->student_result->update([
+            'score' => $request->score,
+            'comment' => $request->comment
+        ]);
 
-        return back()->with('msg', 'Update Successfully.');
+        return back();
     }
 }

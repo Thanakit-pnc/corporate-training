@@ -14,12 +14,14 @@ class CreateStudentResultsTable extends Migration
     public function up()
     {
         Schema::create('student_results', function (Blueprint $table) {
-            $table->integer('group_id');
-            $table->integer('student_id');
-            $table->text('text_result')->nullable();
-            $table->string('score')->nullable();
-            $table->enum('status', ['pending', 'success'])->default('pending');
-            $table->datetime('sent_at')->nullable();
+            $table->increments('id');
+            $table->integer('comp_std_id')->unsigned();
+            $table->foreign('comp_std_id')->references('id')->on('company_students')->nullable();
+            $table->integer('task')->nullable();
+            $table->text('body')->nullable();
+            $table->integer('score')->nullable();
+            $table->text('comment')->nullable();
+            $table->timestamps();
         });
     }
 

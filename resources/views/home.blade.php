@@ -12,7 +12,7 @@
                     <p class="mb-0"><i class="fas fa-quote-left"></i> กรุณาเตรียมความพร้อมก่อนเริ่มทำข้อสอบ เมื่อกด <span class="text-danger font-weight-bold">Start</span> ระบบจะเริ่มทำการจับเวลาทันทีและท่านจะสามาถทำข้อสอบได้เพียง 1 ครั้งเท่านั้น <i class="fas fa-quote-right"></i> </p>
                 </div>
                 <div class="card-footer text-center bg-custom">
-                    <a href="{{ route('exam.test', [rand(1,2)]) }}" class="btn btn-primary width-lg font-weight-bold">Start</a>
+                    <a href="{{ route('exam.test') }}" class="btn btn-primary width-lg font-weight-bold">Start</a>
                 </div>
             </div>
         </div>

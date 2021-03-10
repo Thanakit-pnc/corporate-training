@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDatasetCompaniesTable extends Migration
+class CreateCompanyStudentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateDatasetCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('dataset_companies', function (Blueprint $table) {
+        Schema::create('company_students', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('company_name');
-            $table->timestamps();
+            $table->integer('company_id');
+            $table->integer('student_id');
+            $table->enum('status', ['pending', 'success']);
+            $table->datetime('sent_at')->nullable();
         });
     }
 
@@ -27,6 +29,6 @@ class CreateDatasetCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dataset_companies');
+        Schema::dropIfExists('company_students');
     }
 }

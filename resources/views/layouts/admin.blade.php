@@ -17,6 +17,11 @@
         <!-- Sweet Alert-->
         <link href="{{ asset('public/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />
 
+        <link href="{{ asset('public/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('public/assets/libs/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+
         <!-- App css -->
         <link href="{{ asset('public/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('public/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -192,6 +197,19 @@
         <script src="{{ asset('public/assets/js/pages/sweet-alerts.init.js') }}"></script>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.7.0/tinymce.min.js" integrity="sha512-XaygRY58e7fVVWydN6jQsLpLMyf7qb4cKZjIi93WbKjT6+kG/x4H5Q73Tff69trL9K0YDPIswzWe6hkcyuOHlw==" crossorigin="anonymous"></script>
+
+        <script src="{{ asset('public/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
+        <script src="{{ asset('public/assets/libs/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
+        <script src="{{ asset('public/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+        <script src="{{ asset('public/assets/libs/moment/moment.min.js') }}"></script>
+        <script src="{{ asset('public/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+        <!-- Init js-->
+        <script src="{{ asset('public/assets/js/pages/form-pickers.init.js') }}"></script>
+
+        <!-- Plugins js-->
+        <script src="{{ asset('public/assets/libs/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js') }}"></script>
+        <!-- Init js-->
+        <script src="{{ asset('public/assets/js/pages/form-wizard.init.js') }}"></script>
 
         @yield('js')
 

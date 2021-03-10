@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 class StudentController extends Controller
 {
     public function update(Request $request) {
-
         $student = Student::find($request->student_id);
 
         $student->update([

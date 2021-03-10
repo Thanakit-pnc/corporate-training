@@ -21,8 +21,8 @@ Route::get('student-logout', 'Auth\StudentLoginController@studentLogout')->name(
 
 Route::group(['middleware' => 'auth:student'], function() {
 
-    Route::get('exam/{number}', 'ExamController@index')->name('exam.test');
-    Route::post('exam/{number}', 'ExamController@store');
+    Route::get('exam', 'ExamController@index')->name('exam.test');
+    Route::post('exam', 'ExamController@store');
 
     Route::get('success', function() {
         return view('success');
@@ -30,11 +30,11 @@ Route::group(['middleware' => 'auth:student'], function() {
 });
 
 Route::group(['prefix' => 'admin'], function() {
-    Auth::routes();
-    Route::get('logout', 'Auth\LoginController@logout_admin')->name('admin.logout');
     Route::get('/', function() {
         return redirect()->route('admin.dashboard');
     });
+    Auth::routes();
+    Route::get('logout', 'Auth\LoginController@logout_admin')->name('admin.logout');
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
     Route::get('users', 'Admin\UsersController@index')->name('users.index');
@@ -46,16 +46,18 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::post('create-group', 'Admin\DashboardController@create_group')->name('create-group');
 
-    Route::get('group/{id}', 'Admin\GroupController@index')->name('group.index');
-    Route::post('group/{id}', 'Admin\GroupController@store')->name('group.store');
+    Route::post('company/update/{company}', 'Admin\DashboardController@update')->name('company.update');
 
-    Route::get('students/{group_id}', 'Admin\GroupController@students')->name('students.all');    
-    Route::post('check-to-add/{id}', 'Admin\GroupController@checkToAdd')->name('check-to-add');
+    Route::get('company/{company}', 'Admin\CompanyController@index')->name('company.index');
+    Route::post('company/{company}', 'Admin\CompanyController@store')->name('company.store');
+
+    Route::get('students/{group_id}', 'Admin\CompanyController@students')->name('students.all');    
+    Route::post('check-to-add/{id}', 'Admin\CompanyController@checkToAdd')->name('check-to-add');
 
     Route::post('update-student', 'Admin\StudentController@update')->name('student.update');
 
-    Route::get('group/{group}/view/{student_id}', 'Admin\ViewStudentController@index')->name('view.index');
-    Route::post('view/update', 'Admin\ViewStudentController@update')->name('view.update');
+    Route::get('group/{company_student}', 'Admin\ViewStudentController@index')->name('view.index');
+    Route::post('view/update/{student_result}', 'Admin\ViewStudentController@update')->name('view.update');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

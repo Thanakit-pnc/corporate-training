@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTaskToStudentResultsTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddTaskToStudentResultsTable extends Migration
      */
     public function up()
     {
-        Schema::table('student_results', function (Blueprint $table) {
-            $table->integer('task')->nullable();
+        Schema::create('companies', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('company_name');
+            $table->integer('amount');
+            $table->date('expire_date')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class AddTaskToStudentResultsTable extends Migration
      */
     public function down()
     {
-        Schema::table('student_results', function (Blueprint $table) {
-            $table->dropColumn('task');
-        });
+        Schema::dropIfExists('companies');
     }
 }

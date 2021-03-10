@@ -5,67 +5,42 @@
         <div class="col-md-12">
             <div class="card-box">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="display-6 my-0"><i class="fas fa-building"></i> : {{ $result->company->dataset_company->company_name }} | <i class="fas fa-user-circle"></i> {{ $result->student->name }} | <i class="fas fa-phone"></i> {{ $result->student->mobile }}</h4>
-                    <h5 class="my-0">Sent Date : {{ $result->sent_at->format('d/F/Y H:i') }}</h5>
+                    <h4 class="display-6 my-0"><i class="fas fa-building"></i> : {{ $company_student->company->company_name }} | <i class="fas fa-user-circle"></i> {{ $company_student->student->name }} | <i class="fas fa-phone"></i> {{ $company_student->student->mobile }}</h4>
+                    <h5 class="my-0">Sent Date : {{ $company_student->sent_at->format('d/M/Y H:i') }}</h5>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        @include('exam.task'.$result->task)
+                <div class="row mt-4">
+                    <div class="col-sm-2">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active mb-2" id="task1-tab" data-toggle="pill" href="#task1" role="tab" aria-controls="task1" aria-selected="true">Task 1</a>
+                            <a class="nav-link mb-2" id="task2-tab" data-toggle="pill" href="#task2" role="tab" aria-controls="task2" aria-selected="false">Task 2</a>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <form action="{{ route('view.update') }}" method="post" onsubmit="return confirm('Are you sure you want to update ?')">
-                            {{ csrf_field() }}
-
-                            <textarea id="mytextarea" @if(Auth::check() && auth()->user()->role === 'admin') name="body" @endif>{!! $result->text_result !!}</textarea>
-
-
-                            @empty($result->score || $result->comment)
-                                <div class="mt-2 text-right">
-                                    @if (Auth::check() && auth()->user()->role === 'admin' || auth()->guest())
-                                    <input type="hidden" name="group_id" value="{{ $result->group_id }}">
-                                    <input type="hidden" name="student_id" value="{{ $result->student->id }}">
-
-                                    <div class="form-group text-left">
-                                        <label for="score">Score</label>
-                                        <input type="text" name="score" placeholder="Score" class="form-control {{ $errors->has('score') ? 'is-invalid' : '' }}" value="{{ old('score') }}">
-                                        @if($errors->has('score'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('score') }}
-                                            </div>
-                                        @endif
+                    <div class="col-sm-10">
+                       
+                        <div class="tab-content p-0">
+                            @foreach ($results as $result)
+                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="task{{ $result->task }}" role="tabpanel" aria-labelledby="task{{ $result->task }}-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            @include('exam.task'.$result->task)
+                                        </div>
+                                        <div class="col-md-6">
+                                            <textarea class="mytextarea">{{ $result->body }}</textarea>
+                                        </div>
                                     </div>
-                                    <div class="form-group text-left">
-                                        <label for="comment">Comment</label>
-                                        <textarea name="comment" cols="30" rows="10" class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}" placeholder="Comment">{{ old('comment') }}</textarea>
-                                        @if($errors->has('comment'))
-                                            <div class="invalid-feedback">
-                                                {{ $errors->first('comment') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                    <button type="submit" class="btn btn-success btn-sm">Update</button>
-                                    @endif
-                                    
-                                    @if(Auth::check())
-                                    <button id="copy" type="button" class="btn btn-purple btn-sm" data-toggle="tooltip" data-placement="top" title="Copy URL">
-                                        <i class="fas fa-clipboard"></i>
-                                    </button>  
-                                    @endif
-                                </div>
-                            @else
-                                <div class="mt-3">
-                                    <h4>Score : {{ $result->score }}</h4>
-                                    <hr>
-                                    <h4>Comment</h4>
-                                    <p>
-                                        {{ $result->comment }}
-                                    </p>
-                                </div>
-                            @endempty
 
-                            
-                        </form>
+                                    @include('admin.students.score-comment', [$result])
+                                </div>
+                            @endforeach
+
+                            <div class="text-right">
+                                @if(Auth::check())
+                                    <button class="btn btn-purple btn-sm" id="copy"><i class="fas fa-copy"></i></button>
+                                @endif
+                                <a href="{{ route('company.index', [$company_student->company_id]) }}" class="btn btn-info btn-sm">Back</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,7 +54,7 @@
         let role = "{{ Auth::check() && auth()->user()->role == 'admin' ? 0 : 1}}";
 
         tinymce.init({
-            selector: '#mytextarea',
+            selector: '.mytextarea',
             plugins: 'wordcount',
             toolbar: false,
             menubar: false,
@@ -90,7 +65,9 @@
 
         $('#copy').click(copyUrl)
 
-        function copyUrl() {
+        function copyUrl(e) {
+
+            e.preventDefault();
 
             let el = document.createElement('textarea')
             el.value = location.href

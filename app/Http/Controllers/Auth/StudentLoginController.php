@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Student;
-use App\StudentResult;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,21 +24,17 @@ class StudentLoginController extends Controller
             'password' => 'required',
         ]);
 
-       $student = Student::where('username', $request->username)->first();
+        $student = Student::where('username', $request->username)->with('company_student')->latest('id')->first();
 
-       if(!empty($student)) {
-            $do_exam = StudentResult::where('student_id', $student->id)->latest('sent_at')->first();
-            if(empty($do_exam->sent_at)) {
-                if(Auth::guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
-                    return redirect('home');
-                }
-            } else {
-                return back()->with(['success' => true, 'msg' => 'คุณทำข้อสอบเรียบร้อยแล้ว.']);
+        if($student->company_student->status !== 'success') {
+            if(Auth::guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
+                return redirect('home');
             }
+            return back()->with(['success' => false, 'msg' => 'These credentials do not match our records.']);
+        } else {
+            return back()->with(['success' => true, 'msg' => 'คุณทำข้อสอบเรียบร้อยแล้ว.']);
         }
-
-        return back()->with(['success' => false, 'msg' => 'These credentials do not match our records.']);
-
+       
     }
 
     public function studentLogout() {
