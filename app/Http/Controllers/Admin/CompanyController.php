@@ -25,16 +25,15 @@ class CompanyController extends Controller
     public function store(Company $company, Request $request) {
 
         $this->validate($request, [
-            'username.*' => 'unique:students,username',
-            'mobile.*' => 'min:10|numeric'
-        ],[
-            'unique' => 'username has already been taken.',
-            'min' => 'mobile must be at least 10 characters.'
+            'name.0' => 'required',
+            'username.0' => 'required|unique:students,username',
+            'mobile.0' => 'required_with:username|numeric',
         ]);
 
         for($i = 0; $i < $company->amount; $i++) {
 
             if(!empty($request->name[$i])) {
+                
                 $data = [
                     'name' => $request->name[$i],
                     'username' => $request->username[$i],
@@ -44,7 +43,6 @@ class CompanyController extends Controller
                     'updated_at' => Carbon::now()
                 ];
                 
-
                 $student = Student::create($data);
 
                 $groups[] = [
@@ -81,7 +79,6 @@ class CompanyController extends Controller
             $data[] = [
                 'company_id' => $company_id,
                 'student_id' => $request->check[$i],
-                'status' => 'pending',
             ];
         }
 

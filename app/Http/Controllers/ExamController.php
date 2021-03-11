@@ -28,7 +28,7 @@ class ExamController extends Controller
 
             $company_student = CompanyStudent::find($request->comp_std_id);
 
-            $company_student->status = 'success';
+            $company_student->status = 'sent';
             $company_student->sent_at = Carbon::now();
             $company_student->save();
 

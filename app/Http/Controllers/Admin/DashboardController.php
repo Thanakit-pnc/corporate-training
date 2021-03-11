@@ -14,7 +14,7 @@ class DashboardController extends Controller
 
     public function index() {
 
-        $companies = Company::get();
+        $companies = Company::with('company_students')->get();
 
         return view('admin.dashboard', [
             'companies' => $companies

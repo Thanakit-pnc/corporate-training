@@ -38,7 +38,7 @@
                                     <th>Mobile</th>
                                     <th>Status</th>
                                     <th>Sent date</th>
-                                    <th>Score 1 & 2</th>
+                                    <th>Writing 1 & 2</th>
                                     <th>O/V</th>
                                     <th>Action</th>
                                 </tr>
@@ -72,7 +72,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($group->status === 'success')
+                                            @if (!empty($group->status))
                                                 <a href="{{ route('view.index',[$group]) }}" class="btn btn-info btn-sm">View</a>
                                             @endif
                                             @if (Auth::check())
@@ -94,7 +94,12 @@
                         @for ($i = 0; $i < ($company->amount - $company->company_students->count()); $i++)
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" name="name[]" placeholder="Name">
+                                    <input type="text" class="form-control @if($errors->has('name.'.$i)) is-invalid @endif" name="name[]" placeholder="Name" value="{{ old('name.'.$i) }}">
+                                    @if ($errors->has('name.'.$i))
+                                        <div class="invalid-feedback">
+                                            {{ $errors->first('name.'.$i) }}
+                                        </div>
+                                    @endif
                                 </td>
                                 <td>
                                     <input type="text" class="form-control @if($errors->has('username.'.$i)) is-invalid @endif" name="username[]" placeholder="Username" value="{{ old('username.'.$i) }}">

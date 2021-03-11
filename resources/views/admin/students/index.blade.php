@@ -12,8 +12,8 @@
                 <div class="row mt-4">
                     <div class="col-sm-auto">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active mb-2" id="task1-tab" data-toggle="pill" href="#task1" role="tab" aria-controls="task1" aria-selected="true">Task 1</a>
-                            <a class="nav-link mb-2" id="task2-tab" data-toggle="pill" href="#task2" role="tab" aria-controls="task2" aria-selected="false">Task 2</a>
+                            <a class="nav-link mb-2" id="task1-tab" data-toggle="pill" href="#task1" role="tab" aria-controls="task1" aria-selected="true">Task 1</a>
+                            <a class="nav-link active mb-2" id="task2-tab" data-toggle="pill" href="#task2" role="tab" aria-controls="task2" aria-selected="false">Task 2</a>
                         </div>
                     </div>
                     <div class="col-sm">
@@ -35,7 +35,7 @@
                             @endforeach
                             
                             <div class="text-right">
-                                <a href="{{ route('company.index', [$company_student->company_id]) }}" class="btn btn-info btn-sm">Back</a>
+                                <a href="{{ route('company.index', [$company_student->company_id]) }}" class="btn btn-info btn-sm">Finish</a>
                             </div>
                         </div>
                     </div>

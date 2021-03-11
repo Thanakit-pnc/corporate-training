@@ -11,6 +11,10 @@ class CompanyStudent extends Model
     public $timestamps = false;
 
     protected $dates = ['sent_at'];
+
+    public function scopeSuccess($query) {
+        return $query->where('status', 'success')->get();
+    } 
     
     public function student() {
         return $this->hasOne(Student::class, 'id', 'student_id');

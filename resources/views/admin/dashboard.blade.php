@@ -21,7 +21,7 @@
                                     <a href="{{ route('company.index', [$company]) }}">{{ $company->company_name }}</a>
                                 </td>
                                 <td>
-                                    {{ $company->amount }}
+                                   <strong> ({{ $company->company_students()->success()->count() }})</strong> {{ $company->amount }}
                                 </td>
                                 <td>
                                     @if (!empty($company->expire_date))
