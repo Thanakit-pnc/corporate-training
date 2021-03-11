@@ -51,8 +51,8 @@ Route::group(['prefix' => 'admin'], function() {
     Route::get('company/{company}', 'Admin\CompanyController@index')->name('company.index');
     Route::post('company/{company}', 'Admin\CompanyController@store')->name('company.store');
 
-    Route::get('students/{group_id}', 'Admin\CompanyController@students')->name('students.all');    
-    Route::post('check-to-add/{id}', 'Admin\CompanyController@checkToAdd')->name('check-to-add');
+    Route::get('ex-students/{company_id}', 'Admin\CompanyController@ex_students')->name('exstudents.all');    
+    Route::post('check-to-add/{company_id}', 'Admin\CompanyController@checkToAdd')->name('check-to-add');
 
     Route::post('update-student', 'Admin\StudentController@update')->name('student.update');
 

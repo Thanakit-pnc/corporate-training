@@ -21,6 +21,7 @@ class ExamController extends Controller
 
     public function store(Request $request) {
 
+
         DB::beginTransaction();
         
         try {
@@ -30,19 +31,16 @@ class ExamController extends Controller
             $company_student->status = 'success';
             $company_student->sent_at = Carbon::now();
             $company_student->save();
-            
-            StudentResult::insert([
-                [
-                    'comp_std_id' => $request->comp_std_id,
-                    'task' => 1,
-                    'body' => $request->body1,
-                ],
-                [
-                    'comp_std_id' => $request->comp_std_id,
-                    'task' => 2,
-                    'body' => $request->body2,
-                ]
-            ]);
+
+            for ($i = 1; $i <= 2; $i++) { 
+                
+                StudentResult::create([
+                    'comp_std_id' => $request->input('comp_std_id'),
+                    'task' => $i,
+                    'body' => $request->input('body'.$i)
+                ]);
+
+            }
 
             DB::commit();
 

@@ -28,7 +28,6 @@ class UsersController extends Controller
             'name' => 'required',
             'username' => 'required|unique:users,username',
             'password' => 'required|min:6',
-            'role' => 'required',
         ]);
 
         if($validator->fails()) {
@@ -42,7 +41,6 @@ class UsersController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'password' => bcrypt($request->password),
-            'role' => $request->role,
         ]);
         
         return response()->json([

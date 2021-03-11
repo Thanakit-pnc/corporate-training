@@ -27,7 +27,7 @@ class StudentLoginController extends Controller
 
         $student = Student::where('username', $request->username)->with('company_student')->latest('id')->first();
 
-        if(Carbon::today() > $student->company_student->company->expire_date) {
+        if(!empty($student->company_student->company->expire_date) && Carbon::today() > $student->company_student->company->expire_date) {
             return back()->with(['success' => false, 'msg' => 'หมดเวลาในการทำข้อสอบ.']);
         } else if($student->company_student->status == 'success') {
             return back()->with(['success' => true, 'msg' => 'คุณทำข้อสอบเรียบร้อยแล้ว.']);

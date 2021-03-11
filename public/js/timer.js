@@ -2,7 +2,7 @@ const timeEl = document.getElementById('timer')
 const form = document.getElementById('form-text')
 
 // 4200
-let totalTime = 4200;
+let totalTime = 3600;
 let timer;
 
 window.onload = function() {

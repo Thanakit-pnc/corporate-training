@@ -17,7 +17,7 @@ class CompanyController extends Controller
 
     public function index(Company $company) {
 
-        return view('admin.groups.index', [
+        return view('admin.company.index', [
             'company' => $company
         ]);
     }
@@ -59,19 +59,19 @@ class CompanyController extends Controller
         return back()->with(['msg' => 'Create student successfully.']);
     } 
 
-    public function students($group_id) {
+    public function ex_students($company_id) {
      
-        $students = Student::whereDoesntHave('student_result', function ($query) use ($group_id) {
-            $query->where('group_id', '=', $group_id);
+        $students = Student::whereDoesntHave('company_student', function ($query) use ($company_id) {
+            $query->where('company_id', '=', $company_id);
         })->get();
 
-        return view('admin.groups.students', [
+        return view('admin.company.ex-students', [
             'students' => $students,
-            'group_id' => $group_id
+            'company_id' => $company_id
         ]);
     }
 
-    public function checkToAdd(Request $request, $group_id) {
+    public function checkToAdd(Request $request, $company_id) {
 
         if(!isset($request->check)) {
             return back()->with(['msg' => 'Please select at least 1']);
@@ -79,13 +79,14 @@ class CompanyController extends Controller
         
         for ($i = 0; $i < count($request->check); $i++) { 
             $data[] = [
-                'group_id' => $group_id,
-                'student_id' => $request->check[$i]
+                'company_id' => $company_id,
+                'student_id' => $request->check[$i],
+                'status' => 'pending',
             ];
         }
 
-        StudentResult::insert($data);
+        CompanyStudent::insert($data);
 
-        return redirect()->route('group.index', [$group_id])->with(['msg' => 'Add student to group successfully.']);
+        return redirect()->route('group.company', [$company_id])->with(['msg' => 'Add student to group successfully.']);
     }
 }

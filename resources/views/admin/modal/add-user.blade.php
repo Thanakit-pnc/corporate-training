@@ -33,18 +33,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="role" class="control-label">Role</label>
-                                <select name="role" id="role" class="form-control">
-                                    <option selected disabled>--Select--</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="teacher">Teacher</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>

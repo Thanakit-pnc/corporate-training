@@ -4,7 +4,7 @@
     <div class="card-box">
         <div class="row">
             <div class="col-md-12 text-center mb-3">
-                <h2 id="timer" class="my-0">70:00</h2>
+                <h3 id="timer" class="m-0">60:00</h3>
             </div>
 
             <div class="col-md-12">

@@ -23,4 +23,5 @@ class Student extends Authenticatable
     public function company_student() {
         return $this->belongsTo(CompanyStudent::class, 'id', 'student_id');
     }
+
 }

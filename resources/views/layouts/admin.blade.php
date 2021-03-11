@@ -78,12 +78,6 @@
                                         <h6 class="text-overflow m-0">Welcome !</h6>
                                     </div>
 
-                                    <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                        <i class="mdi mdi-account-circle"></i>
-                                        <span>My Account</span>
-                                    </a>
-
                                     <div class="dropdown-divider"></div>
 
                                     <!-- item-->
@@ -130,13 +124,11 @@
                                     </a>
                                 </li>
 
-                                @if (auth()->user()->role === 'admin')
                                 <li class="has-submenu">
                                     <a href="{{ route('users.index') }}">
                                         <i class="fas fa-users"></i>Users
                                     </a>
                                 </li>
-                                @endif
 
                             </ul>
                         @endif

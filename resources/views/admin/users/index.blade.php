@@ -25,7 +25,6 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Username</th>
-                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,7 +35,6 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->username }}</td>
-                                <td>{{ ucfirst($user->role) }}</td>
                                 <td>
                                     <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-warning btn-sm waves-effect waves-light"><i class="fas fa-edit"></i></a>
                                     @if(auth()->user()->id !== $user->id) 

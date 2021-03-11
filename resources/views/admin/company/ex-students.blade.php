@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-box">
-                <h4 class="mt-0">Student All</h4>
+                <h4 class="mt-0">ex-Student All</h4>
+                <p class="text-muted">Check student add in to company.</p>
 
                 @if (session('msg'))
                 <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
@@ -15,7 +16,7 @@
                 </div>
                 @endif
         
-                <form action="{{ route('check-to-add', [$group_id]) }}" method="post">
+                <form action="{{ route('check-to-add', [$company_id]) }}" method="post">
                     {{ csrf_field() }}
                     <table class="table table-bordered mt-3">
                         <thead>

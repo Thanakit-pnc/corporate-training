@@ -16,7 +16,7 @@
 
                 @if ($company->company_students->count() !== $company->amount)
                     <div class="text-right mt-2">
-                        <a href="{{ route('students.all', [$company->id]) }}" class="btn btn-primary waves-effect waves-light">eX Student</a>
+                        <a href="{{ route('exstudents.all', [$company->id]) }}" class="btn btn-primary waves-effect waves-light">eX Student</a>
                     </div>
                 @endif
 

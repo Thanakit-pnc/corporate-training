@@ -62,14 +62,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="role">Role</label>
-                            <select name="role" id="role">
-                                <option value="admin">Admin</option>
-                                <option value="teacher">Teacher</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Register
