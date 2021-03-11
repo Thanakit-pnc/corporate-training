@@ -58,6 +58,8 @@ Route::group(['prefix' => 'admin'], function() {
 
     Route::get('group/{company_student}', 'Admin\ViewStudentController@index')->name('view.index');
     Route::post('view/update/{student_result}', 'Admin\ViewStudentController@update')->name('view.update');
+
+    Route::get('sendMail', 'Admin\SendMailController@sendMail');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
