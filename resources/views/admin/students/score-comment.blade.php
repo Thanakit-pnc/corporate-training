@@ -6,21 +6,11 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="score">Score Task {{ $result->task }}</label>
-                    <input type="text" class="form-control {{ $errors->has('score') ? 'is-invalid' : '' }}" name="score" placeholder="Score">
-                    @if ($errors->has('score'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('score') }}
-                        </div>
-                    @endif
+                    <input type="text" class="form-control" name="score" placeholder="Score" required>
                 </div>
                 <div class="form-group">
                     <label for="comment">Comment Task {{ $result->task }}</label>
-                    <textarea name="comment" class="form-control {{ $errors->has('comment') ? 'is-invalid' : '' }}" placeholder="Comment" rows="10"></textarea>
-                    @if ($errors->has('comment'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('comment') }}
-                        </div>
-                    @endif
+                    <textarea name="comment" class="form-control" placeholder="Comment" rows="10" required></textarea>
                 </div>
             </div>
         </div>

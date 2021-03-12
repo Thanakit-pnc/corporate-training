@@ -17,7 +17,6 @@
                         </div>
                     </div>
                     <div class="col-sm">
-                       
                         <div class="tab-content p-0">
                             @foreach ($results as $result)
 
