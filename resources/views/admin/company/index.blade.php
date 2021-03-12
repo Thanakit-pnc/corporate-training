@@ -1,14 +1,24 @@
 @extends('layouts.admin')
 
+@section('css')
+    <style>
+        table thead th {
+            vertical-align: middle !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-md-12">
             <div class="card-box">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <h3 class="my-0 mr-3">{{ $company->company_name }} ( {{ $company->amount }} {{ str_plural('Person', $company->amount) }} )</h3>
                         @if(Auth::check())
-                            <button class="btn btn-purple btn-sm" id="copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="CopyUrl"><i class="fas fa-copy"></i></button>
+                            <button class="btn btn-purple btn-sm mr-2" id="copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="CopyUrl"><i class="fas fa-copy"></i></button>
+
+                            <a href="{{ route('pdf.index', [$company]) }}" class="btn btn-dark btn-sm waves-effect text-white"> <i class="fas fa-file-pdf mr-1"></i> Export</a>
                         @endif
                     </div>
                     <p class="text-primary mb-0 font-weight-bold">Created at : {{ $company->created_at->format('d/F/Y H:i') }}</p>
@@ -68,7 +78,7 @@
                                         </td> 
                                         <td>
                                             @if(!empty($score1->score) && !empty($score2->score) && $group->student_results->sum('score') / 2 !== 0)
-                                                <span class="badge badge-success font-13">{{ $group->student_results->sum('score') / 2 }}</span>
+                                                <span class="badge badge-success font-13">{{ $group->student_results()->overall() }}</span>
                                             @endif
                                         </td>
                                         <td>
