@@ -12,8 +12,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card-box">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
+                <div class="d-flex flex-wrap justify-content-between align-items-center">
+                    <div class="d-flex flex-wrap align-items-center">
                         <h3 class="my-0 mr-3">{{ $company->company_name }} ( {{ $company->amount }} {{ str_plural('Person', $company->amount) }} )</h3>
                         @if(Auth::check())
                             <button class="btn btn-purple btn-sm mr-2" id="copy" data-toggle="tooltip" data-placement="top" title="" data-original-title="CopyUrl"><i class="fas fa-copy"></i></button>
@@ -39,61 +39,66 @@
                     @endif
                     
                     @if($company->company_students->count())
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Username</th>
-                                    <th>Password</th>
-                                    <th>Status</th>
-                                    <th>Sent date</th>
-                                    <th>Writing 1 & 2</th>
-                                    <th>O/V</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($company->company_students as $group)
+                        <div class="table-responsive">
+                            <table class="table table-striped w-100 text-nowrap">
+                                <thead>
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $group->student->name }}</td>
-                                        <td>{{ $group->student->username }}</td>
-                                        <td>{{ strtolower(explode(' ', $group->student->name)[0]) }}</td>
-                                        <td>
-                                            <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge badge-dark">{{ !empty($group->sent_at) ? $group->sent_at->format('d/m/Y H:i') : '' }}</span>
-                                        </td>
-                                        <td>
-                                            @php
-                                                $score1 = $group->student_results()->oldest('id')->first();
-                                                $score2 = $group->student_results()->latest('id')->first();
-                                            @endphp
-                                            @if ($group->student_results->count())
-                                                <span class="badge badge-pill badge-primary font-13">{{ $score1->score }}</span>
-                                                <span class="badge badge-pill badge-purple font-13">{{ $score2->score }}</span>
-                                            @endif
-                                        </td> 
-                                        <td>
-                                            @if(!empty($score1->score) && !empty($score2->score) && $group->student_results->sum('score') / 2 !== 0)
-                                                <span class="badge badge-success font-13">{{ $group->student_results()->overall() }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if (!empty($group->status))
-                                                <a href="{{ route('view.index',[$group]) }}" class="btn btn-info btn-sm">View</a>
-                                            @endif
-                                            @if (Auth::check())
-                                                <button class="btn btn-warning btn-sm waves-effect waves-light" data-toggle="modal" data-target="#edit{{ $group->student->id }}">Edit</button>
-                                                @include('admin.modal.edit-student', [$group])
-                                            @endif
-                                        </td>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Password</th>
+                                        <th>Status</th>
+                                        <th>Sent date</th>
+                                        <th>Writing 1 & 2</th>
+                                        <th>O/V</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($company->company_students as $group)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                @if (!empty($group->status))
+                                                    <a href="{{ route('view.index',[$group]) }}" class="btn btn-sm btn-success">{{ $group->student->name }}</a>
+                                                @else
+                                                    {{ $group->student->name }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $group->student->username }}</td>
+                                            <td>{{ strtolower(explode(' ', $group->student->name)[0]) }}</td>
+                                            <td>
+                                                <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-dark">{{ !empty($group->sent_at) ? $group->sent_at->format('d/m/Y H:i') : '' }}</span>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $score1 = $group->student_results()->oldest('id')->first();
+                                                    $score2 = $group->student_results()->latest('id')->first();
+                                                @endphp
+                                                @if ($group->student_results->count())
+                                                    <span class="badge badge-pill badge-primary font-13">{{ $score1->score }}</span>
+                                                    <span class="badge badge-pill badge-purple font-13">{{ $score2->score }}</span>
+                                                @endif
+                                            </td> 
+                                            <td>
+                                                @if(!empty($score1->score) && !empty($score2->score) && $group->student_results->sum('score') / 2 !== 0)
+                                                    <span class="badge badge-success font-13">{{ $group->student_results()->overall() }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (Auth::check())
+                                                    <button class="btn btn-warning btn-sm waves-effect waves-light" data-toggle="modal" data-target="#edit{{ $group->student->id }}">Edit</button>
+                                                    @include('admin.modal.edit-student', [$group])
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     @endif
                     
                     @if($company->amount !== $company->company_students->count())

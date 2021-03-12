@@ -11,11 +11,12 @@ class StudentController extends Controller
     public function update(Request $request) {
         $student = Student::find($request->student_id);
 
+        $password = strtolower(explode(' ', $request->name[$i])[0]);
+
         $student->update([
             'name' => $request->name,
             'username' => $request->username,
-            'mobile' => $request->mobile,
-            'password' => bcrypt($request->mobile)
+            'password' => $password,
         ]);
 
         return redirect()->route('group.index', [$student->student_result->group_id]);
