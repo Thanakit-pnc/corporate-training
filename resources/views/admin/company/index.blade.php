@@ -35,6 +35,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Username</th>
+                                    <th>Password</th>
                                     <th>Status</th>
                                     <th>Sent date</th>
                                     <th>Writing 1 & 2</th>
@@ -48,6 +49,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $group->student->name }}</td>
                                         <td>{{ $group->student->username }}</td>
+                                        <td>{{ strtolower(explode(' ', $group->student->name)[0]) }}</td>
                                         <td>
                                             <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
                                         </td>
