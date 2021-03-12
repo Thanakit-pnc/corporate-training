@@ -25,19 +25,7 @@ class ViewStudentController extends Controller
 
     public function update(StudentResult $student_result, Request $request) {
 
-        if(StudentResult::whereNull('score')->count() === 1) {
-            $company_student = CompanyStudent::find($student_result->comp_std_id);
-
-            $company_student->update([
-                'status' => 'success'
-            ]);
-        }
-
-        if(isset($request->comment)) {
-            $this->validate($request, [
-                'score' => 'required|numeric',
-                'comment' => 'required|present|nullable',
-            ]);
+        if($request->comment !== null) {
             $request->student_result->update([
                 'score' => $request->score,
                 'comment' => $request->comment
@@ -45,6 +33,14 @@ class ViewStudentController extends Controller
         } else {
             $request->student_result->update([
                 'score' => $request->score,
+            ]);
+        }
+
+        if(StudentResult::whereNull('score')->count() === 1) {
+            $company_student = CompanyStudent::find($student_result->comp_std_id);
+
+            $company_student->update([
+                'status' => 'success'
             ]);
         }
 
