@@ -30,7 +30,7 @@ class StudentLoginController extends Controller
         if($student) {
             if(!empty($student->company_student->company->expire_date) && Carbon::today() > $student->company_student->company->expire_date) {
                 return back()->with(['success' => false, 'msg' => 'หมดเวลาในการทำข้อสอบ.']);
-            } else if($student->company_student->status == 'success') {
+            } else if($student->company_student->status == 'sent') {
                 return back()->with(['success' => true, 'msg' => 'คุณทำข้อสอบเรียบร้อยแล้ว.']);
             } else {
                 if(Auth::guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
