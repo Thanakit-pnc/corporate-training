@@ -35,7 +35,6 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Username</th>
-                                    <th>Mobile</th>
                                     <th>Status</th>
                                     <th>Sent date</th>
                                     <th>Writing 1 & 2</th>
@@ -49,7 +48,6 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $group->student->name }}</td>
                                         <td>{{ $group->student->username }}</td>
-                                        <td>{{ $group->student->mobile }}</td>
                                         <td>
                                             <span class="badge badge-{{ $group->status == 'success' ? 'success' : 'warning' }}">{{ ucfirst($group->status) }}</span>
                                         </td>
@@ -106,14 +104,6 @@
                                     @if ($errors->has('username.'.$i))
                                         <div class="invalid-feedback">
                                             {{ $errors->first('username.'.$i) }}
-                                        </div>
-                                    @endif
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control @if($errors->has('mobile.'.$i)) is-invalid @endif" name="mobile[]" placeholder="Mobile" value="{{ old('mobile.'.$i) }}">
-                                    @if ($errors->has('mobile.'.$i))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('mobile.'.$i) }}
                                         </div>
                                     @endif
                                 </td>
