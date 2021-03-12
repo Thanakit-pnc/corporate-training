@@ -32,7 +32,7 @@
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card">
                             <div class="card-header bg-primary text-center">
-                                <h2 class="my-0 text-white">Sign In</h2>
+                                <h2 class="my-0 text-white">Sign In (Admin)</h2>
                             </div>
                             <div class="card-body">
 
