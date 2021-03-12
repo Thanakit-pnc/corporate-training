@@ -27,18 +27,18 @@ class CompanyController extends Controller
         $this->validate($request, [
             'name.0' => 'required',
             'username.0' => 'required|unique:students,username',
-            'mobile.0' => 'required_with:username|numeric',
         ]);
 
         for($i = 0; $i < $company->amount; $i++) {
 
             if(!empty($request->name[$i])) {
+
+                $password = strtolower(explode(' ', $request->name[$i])[0]);
                 
                 $data = [
                     'name' => $request->name[$i],
                     'username' => $request->username[$i],
-                    'mobile' => $request->mobile[$i],
-                    'password' => bcrypt($request->mobile[$i]),
+                    'password' => bcrypt($password),
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];
