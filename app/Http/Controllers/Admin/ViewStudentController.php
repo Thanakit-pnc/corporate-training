@@ -47,7 +47,9 @@ class ViewStudentController extends Controller
                 'score' => $request->score,
             ]);
         }
+
+        $tab = $request->task;
         
-        return back();
+        return back()->with('tab', $tab);
     }
 }

@@ -27,14 +27,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="mobile" class="control-label">Mobile</label>
-                                <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" value="{{ $group->student->mobile }}">
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>

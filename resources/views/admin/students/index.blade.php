@@ -12,15 +12,24 @@
                 <div class="row mt-4">
                     <div class="col-sm-auto">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link mb-2" id="task1-tab" data-toggle="pill" href="#task1" role="tab" aria-controls="task1" aria-selected="true">Task 1</a>
-                            <a class="nav-link active mb-2" id="task2-tab" data-toggle="pill" href="#task2" role="tab" aria-controls="task2" aria-selected="false">Task 2</a>
+                            <a class="nav-link {{ empty(session('tab')) ? 'active' : '' }} mb-2" id="task1-tab" data-toggle="pill" href="#task1" role="tab" aria-controls="task1" aria-selected="true">Task 1</a>
+                            <a class="nav-link {{ in_array(session('tab'), [1, 2]) ? 'active' : '' }} mb-2" id="task2-tab" data-toggle="pill" href="#task2" role="tab" aria-controls="task2" aria-selected="false">Task 2</a>
                         </div>
                     </div>
                     <div class="col-sm">
                        
                         <div class="tab-content p-0">
                             @foreach ($results as $result)
-                                <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="task{{ $result->task }}" role="tabpanel" aria-labelledby="task{{ $result->task }}-tab">
+
+                                @php
+                                    if(empty(session('tab'))) {
+                                        $loopActive = $loop->first;
+                                    } else if(in_array(session('tab'), [1, 2])) {
+                                        $loopActive = $loop->last;
+                                    }
+                                @endphp
+
+                                <div class="tab-pane fade {{ $loopActive ? 'show active' : '' }}" id="task{{ $result->task }}" role="tabpanel" aria-labelledby="task{{ $result->task }}-tab">
                                     <div class="row">
                                         <div class="col-md-6">
                                             @include('exam.task'.$result->task)
