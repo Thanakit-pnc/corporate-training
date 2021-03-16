@@ -16,7 +16,7 @@ class PdfController extends Controller
 
             $excel->sheet('Sheetname', function($sheet) use($company) {
                 
-                $sheet->mergeCells('A1:D1');
+                $sheet->mergeCells('A1:E1');
                 $sheet->cell('A1', function($cell) use($company) {
 
                     $cell->setValue($company->company_name);
@@ -29,11 +29,13 @@ class PdfController extends Controller
                 });
 
                 $sheet->row(2, array(
-                    'Name', 'Task 1', 'Task 2', 'Over all'
+                    'No', 'Name', 'Task 1', 'Task 2', 'Over all'
                ));
 
                 $i = 3;
-                foreach($company->company_students as $student) {
+                foreach($company->company_students as $key => $student) {
+
+                    $amount = $company->company_students->count();
 
                     if($student->student_results()->whereNotNull('score')->count() !== 0) {
                         $task1 = $student->student_results()->task1()->score;
@@ -46,7 +48,7 @@ class PdfController extends Controller
                     }
 
                     $sheet->rows(array(
-                        array($student->student->name, $task1, $task2, $over_all)
+                        array($key+1, $student->student->name, $task1, $task2, $over_all)
                     ));
 
                     $sheet->setHeight($i++, 20);
@@ -58,18 +60,23 @@ class PdfController extends Controller
                 ));
 
                 $sheet->setAutoSize(true);
+                $sheet->setWidth('A', 5);
 
-
-                $sheet->cells('A2:D2', function($cells) {
+                $sheet->cells('A2:E2', function($cells) {
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
                 });
 
                 $sheet->cells('A3:A14', function($cells) {
+                    $cells->setAlignment('center');
                     $cells->setValignment('center');
                 });
 
-                $sheet->cells('B3:D14', function($cells) {
+                $sheet->cells('B3:B14', function($cells) {
+                    $cells->setValignment('center');
+                });
+
+                $sheet->cells('C3:E14', function($cells) {
                     $cells->setAlignment('center');
                     $cells->setValignment('center');
                 });

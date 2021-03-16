@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card-box">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="display-6 my-0"><i class="fas fa-building"></i> : {{ $company_student->company->company_name }} | <i class="fas fa-user-circle"></i> {{ $company_student->student->name }} | <i class="fas fa-phone"></i> {{ $company_student->student->mobile }}</h4>
+                    <h4 class="display-6 my-0"><i class="fas fa-building"></i> : {{ $company_student->company->company_name }} | <i class="fas fa-user-circle"></i> {{ $company_student->student->name }}</h4>
                     <h5 class="my-0">Sent Date : {{ $company_student->sent_at->format('d/M/Y H:i') }}</h5>
                 </div>
 
