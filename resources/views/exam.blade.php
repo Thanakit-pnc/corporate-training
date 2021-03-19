@@ -125,7 +125,7 @@
                     if(t.value) {
                         $('#form-text').submit()
                     }
-                })
+            })
         })
     </script>
 @endsection

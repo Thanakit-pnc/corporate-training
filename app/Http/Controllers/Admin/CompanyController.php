@@ -79,11 +79,13 @@ class CompanyController extends Controller
             $data[] = [
                 'company_id' => $company_id,
                 'student_id' => $request->check[$i],
-            ];
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]; 
         }
 
         CompanyStudent::insert($data);
 
-        return redirect()->route('group.company', [$company_id])->with(['msg' => 'Add student to group successfully.']);
+        return redirect()->route('company.index', [$company_id])->with(['msg' => 'Add student to group successfully.']);
     }
 }

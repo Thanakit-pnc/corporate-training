@@ -16,7 +16,7 @@ class StudentController extends Controller
         $student->update([
             'name' => $request->name,
             'username' => $request->username,
-            'password' => $password,
+            'password' => bcrypt($password),
         ]);
 
         return redirect()->route('company.index', [$student->company_student]);

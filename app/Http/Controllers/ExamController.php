@@ -7,12 +7,15 @@ use App\StudentResult;
 use App\CompanyStudent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ExamController extends Controller
 {
     public function index() {
         
-        $company_student = CompanyStudent::where('student_id', auth('student')->id())->latest('id')->first();
+        $company_student = CompanyStudent::where('student_id', auth('student')->id())
+            ->whereNull('status')
+            ->first();
 
         return view('exam', [
             'company_student' => $company_student
@@ -20,31 +23,38 @@ class ExamController extends Controller
     }
 
     public function store(Request $request) {
-
+        
+        Session::put('body1', $request->body1);
+        Session::put('body2', $request->body2);
 
         DB::beginTransaction();
         
         try {
-
             $company_student = CompanyStudent::find($request->comp_std_id);
-
+            
             $company_student->status = 'sent';
             $company_student->sent_at = Carbon::now();
             $company_student->save();
-
+            
             for ($i = 1; $i <= 2; $i++) { 
                 
-                StudentResult::create([
-                    'comp_std_id' => $request->input('comp_std_id'),
+                $results[] = [
+                    'comp_std_id' => $request->comp_std_id,
                     'task' => $i,
-                    'body' => $request->input('body'.$i)
-                ]);
+                    'body' => $request->input('body'.$i),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
 
             }
 
-            DB::commit();
+            $results = StudentResult::insert($results);
 
-            return redirect('success');
+            if($company_student && $results) {
+                DB::commit();
+    
+                return redirect('success');
+            }
 
         } catch(\Exception $e) {
             DB::rollback();

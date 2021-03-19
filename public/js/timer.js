@@ -2,7 +2,7 @@ const timeEl = document.getElementById('timer')
 const form = document.getElementById('form-text')
 
 // 4200
-let totalTime = 3600;
+let totalTime = 4200;
 let timer;
 
 window.onload = function() {
@@ -19,7 +19,6 @@ function setTime() {
 
     if(totalTime < 0) {
         stopTime()
-
         Swal.fire({
             title:"Your time is up!",
             type:"warning",

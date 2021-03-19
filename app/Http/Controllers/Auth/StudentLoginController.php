@@ -25,10 +25,14 @@ class StudentLoginController extends Controller
             'password' => 'required',
         ]);
 
-        $student = Student::where('username', $request->username)->with('company_student')->latest('id')->first();
+        $student = Student::where('username', $request->username)->with(['company_student' => function($q) {
+            $q->whereNull('status')
+                ->orWhere('status', 'success')
+                ->first();
+        }])->first();
 
-        if($student) {
-            if(!empty($student->company_student->company->expire_date) && Carbon::today() > $student->company_student->company->expire_date) {
+        if(!empty($student->company_student)) {
+            if(!empty($student->company_student->company->expire_date) && $student->company_student->company->expire_date < Carbon::today()) {
                 return back()->with(['success' => false, 'msg' => 'หมดเวลาในการทำข้อสอบ.']);
             } else if($student->company_student->status == 'sent') {
                 return back()->with(['success' => true, 'msg' => 'คุณทำข้อสอบเรียบร้อยแล้ว.']);
@@ -36,15 +40,16 @@ class StudentLoginController extends Controller
                 if(Auth::guard('student')->attempt(['username' => $request->username, 'password' => $request->password])) {
                     return redirect('home');
                 }
+                return back()->with(['success' => false, 'msg' => 'These credentials do not match our records.']);
             }
         }
-        
-        return back()->with(['success' => false, 'msg' => 'These credentials do not match our records.']);
+        return back()->with(['success' => false, 'msg' => 'คุณไม่มีรายชื่ออยู่ในห้อง กรูณาติดต่อ Administrator.']);
     }
 
     public function studentLogout() {
         Auth::guard('student')->logout();
-
+        session()->forget('body1');
+        session()->forget('body2');
         return redirect()->route('login.student');
     }
 }
